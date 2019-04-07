@@ -23,22 +23,23 @@ func main(){
 
 	// make some test metrics
 	m1 := WorkerQueue.MetricValue{}
-	m1.MetricVal = 12.34
+	m1.MetricVal = 11.34
 	m1.Timestamp = time.Now()
 
 	m2 := WorkerQueue.MetricValue{}
-	m2.MetricVal = 13.34
+	m2.MetricVal = 12.34
 	m2.Timestamp = time.Now()
 
 	m3 := WorkerQueue.MetricValue{}
-	m3.MetricVal = 14.34
+	m3.MetricVal = 13.34
 	m3.Timestamp = time.Now()
 
+
 	metrics := WorkerQueue.MetricRequest{}
-	metrics.InstanceId = "1"
-	metrics.MetricValues = make([]WorkerQueue.MetricValue, 2)
+	metrics.InstanceId = "lvm1"
+	metrics.MetricValues = make([]WorkerQueue.MetricValue, 0)
 	// add the two dummy values
-	metrics.MetricValues = append(metrics.MetricValues, m1, m2)
+	metrics.MetricValues = append(metrics.MetricValues, m1)
 
 
 	// send them to all registered senders
@@ -46,10 +47,22 @@ func main(){
 
 	fmt.Println("any key to continue")
 	input := bufio.NewScanner(os.Stdin)
-	input.Scan()
+	//input.Scan()
+	time.Sleep(3000 * time.Millisecond)
 
 	metrics.MetricValues = nil
-	metrics.MetricValues = make([]WorkerQueue.MetricValue, 1)
+	metrics.MetricValues = make([]WorkerQueue.MetricValue, 0)
+	// add one more dummy values
+	metrics.MetricValues = append(metrics.MetricValues, m2)
+	WorkerQueue.SendMetricToRegisteredSenders(metrics)
+
+	fmt.Println("any key to continue")
+	input = bufio.NewScanner(os.Stdin)
+	//input.Scan()
+	time.Sleep(3000 * time.Millisecond)
+
+	metrics.MetricValues = nil
+	metrics.MetricValues = make([]WorkerQueue.MetricValue, 0)
 	// add one more dummy values
 	metrics.MetricValues = append(metrics.MetricValues, m3)
 	WorkerQueue.SendMetricToRegisteredSenders(metrics)
