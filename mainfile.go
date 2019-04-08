@@ -36,7 +36,7 @@ func main(){
 
 
 	metrics := WorkerQueue.MetricRequest{}
-	metrics.InstanceId = "lvm1"
+	metrics.InstanceId = "lvm2"
 	metrics.MetricValues = make([]WorkerQueue.MetricValue, 0)
 	// add the two dummy values
 	metrics.MetricValues = append(metrics.MetricValues, m1)
